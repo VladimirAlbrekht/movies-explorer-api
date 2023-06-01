@@ -53,8 +53,10 @@ app.use(errorLogger);
 // Middleware для обработки ошибок
 app.use(errorHandler);
 
-// Подключаемся к серверу MongoDB
-mongoose.connect(config.mongoUri, {
+// Подключаемся к серверу MongoDB в зависимости от режима выполнения приложения
+const mongoUri = process.env.NODE_ENV === 'production' ? process.env.MONGO_URI_PROD : config.mongoUri;
+
+mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

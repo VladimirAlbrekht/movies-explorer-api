@@ -1,3 +1,3 @@
 module.exports = {
-  mongoUri: 'mongodb://localhost:27017/bitfilmsdb',
+  mongoUri: process.env.MONGO_URI || 'mongodb://localhost:27017/bitfilmsdb',
 };
