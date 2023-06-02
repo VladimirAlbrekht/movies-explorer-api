@@ -40,7 +40,7 @@ app.use(limiter);
 mongoose.connect(config.mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-})
+});
 
 // Подключаем корневой роутер
 app.use(rootRouter);
@@ -59,7 +59,6 @@ app.use(errorLogger);
 // Middleware для обработки ошибок
 app.use(errorHandler);
 
-
-app.listen(3000, () => {
+app.listen(config.port, () => {
   console.log('Сервер запущен');
 });
