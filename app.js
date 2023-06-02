@@ -36,6 +36,12 @@ app.use(requestLogger);
 // Подключаем лимитер запросов
 app.use(limiter);
 
+// Подключаемся к серверу MongoDB
+mongoose.connect(config.mongoUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+
 // Подключаем корневой роутер
 app.use(rootRouter);
 
@@ -53,19 +59,6 @@ app.use(errorLogger);
 // Middleware для обработки ошибок
 app.use(errorHandler);
 
-// Подключаемся к серверу MongoDB в зависимости от режима выполнения приложения
-const mongoUri = process.env.NODE_ENV === 'production' ? process.env.MONGO_URI_PROD : config.mongoUri;
-
-mongoose.connect(mongoUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => {
-    console.log('Подключение к базе данных установлено');
-  })
-  .catch((err) => {
-    console.log(`Ошибка при подключении к базе данных: ${err.message}`);
-  });
 
 app.listen(3000, () => {
   console.log('Сервер запущен');
