@@ -8,15 +8,15 @@ const { validateSignup, validateSignin } = require('../middlewares/validation');
 const { createUser, login, signOut } = require('../controllers/users');
 
 // Открытые маршруты
-router.post('/api/signup', validateSignup, createUser);
-router.post('/api/signin', validateSignin, login);
+router.post('/signup', validateSignup, createUser);
+router.post('/signin', validateSignin, login);
 router.use(checkAuth);
 
 // Маршрут для выхода пользователя
-router.post('/api/signout', signOut);
+router.post('/signout', signOut);
 
 // Роутеры, требующие авторизации
-router.use('/api/users', usersRouter);
-router.use('/api/movies', moviesRouter);
+router.use('/users', usersRouter);
+router.use('/movies', moviesRouter);
 
 module.exports = router;
