@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
       validator: validator.isEmail,
       message: 'Неверный формат email',
     },
+    mutable: true,
   },
   password: {
     type: String,
