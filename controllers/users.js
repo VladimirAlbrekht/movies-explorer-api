@@ -76,25 +76,27 @@ const getCurrentUser = async (req, res, next) => {
 };
 
 const updateUser = (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
 
-  User.findByIdAndUpdate(
-    req.user._id,
-    { name, about },
-    { new: true, runValidators: true },
-  )
-    .then((user) => {
-      if (!user) {
-        return next(new NoFoundError('Пользователь не найден'));
-      }
-      return res.json(user);
-    })
-    .catch((error) => {
-      if (error instanceof ValidationError) {
-        return next(new ValidationError('Ошибка валидации.'));
-      }
-      return next(error);
-    });
+  User.findByIdAndUpdate(req.user._id, { name, email }, {
+    new: true,
+    runValidators: true,
+    context: 'query'
+  })
+  .then(user => user.save())
+  .then(user => {
+    if (!user) {
+      return next(new NoFoundError('Пользователь не найден'))
+    }
+    console.log(user)
+    return res.json(user)
+  })
+  .catch(error => {
+    if (error instanceof ValidationError) {
+      return next(new ValidationError('Ошибка валидации.'));
+    }
+    return next(error);
+  });
 };
 
 const signOut = async (req, res, next) => {
