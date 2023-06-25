@@ -24,9 +24,9 @@ const createMovie = (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
-    movieId,
     nameRU,
     nameEN,
+    movieId
   } = req.body;
 
   Movie.create({
